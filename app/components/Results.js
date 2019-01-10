@@ -37,6 +37,7 @@ Profile.propTypes = {
 const Player = props => (
     <div>
         <h1 className='header'>{props.label}</h1>
+        <img className='avatar' src={props.profile.avatar_url} />
         <h3 style={{ textAlign: 'center' }}>Score: {props.score}</h3>
     </div>
 )
@@ -78,29 +79,25 @@ class Results extends Component {
         //     }
         // )
 
-        var playersArr = queryString.parse(this.props.location.search)
+        const playersArr = queryString.parse(this.props.location.search)
 
         api.battle([playersArr.playerOneName, playersArr.playerTwoName]).then(
-            function(players) {
+            players => {
                 if (players === null) {
-                    return this.setState(function() {
-                        return {
-                            error:
-                                'Looks like there was an error. Check that both users exist on Github.',
-                            loading: false,
-                        }
-                    })
+                    return this.setState(() => ({
+                        error:
+                            'Looks like there was an error. Check that both users exist on Github.',
+                        loading: false,
+                    }))
                 }
 
-                this.setState(function() {
-                    return {
-                        error: null,
-                        winner: players[0],
-                        loser: players[1],
-                        loading: false,
-                    }
-                })
-            }.bind(this)
+                this.setState(() => ({
+                    error: null,
+                    winner: players[0],
+                    loser: players[1],
+                    loading: false,
+                }))
+            }
         )
 
         //end
