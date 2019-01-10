@@ -61,46 +61,26 @@ class Results extends Component {
     }
 
     componentDidMount() {
-        // const players = queryString.parse(this.props.location.search)
-        // api.battle([players.playerOneName, players.playerTwoName]).then(
-        //     results => {
-        //         if (results === null) {
-        //             this.setState({
-        //                 error: 'Error getting both users',
-        //                 loading: false,
-        //             })
-        //         }
-        //         this.setState({
-        //             error: null,
-        //             winner: results[0],
-        //             loser: results[1],
-        //             loading: false,
-        //         })
-        //     }
-        // )
-
         const playersArr = queryString.parse(this.props.location.search)
 
         api.battle([playersArr.playerOneName, playersArr.playerTwoName]).then(
             players => {
                 if (players === null) {
-                    return this.setState(() => ({
+                    this.setState({
                         error:
                             'Looks like there was an error. Check that both users exist on Github.',
                         loading: false,
-                    }))
+                    })
                 }
 
-                this.setState(() => ({
+                this.setState({
                     error: null,
                     winner: players[0],
                     loser: players[1],
                     loading: false,
-                }))
+                })
             }
         )
-
-        //end
     }
 
     render() {
