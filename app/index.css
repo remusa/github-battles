@@ -116,19 +116,6 @@ a {
   margin: 10px;
 }
 
-.loading {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loading p {
-  font-size: 28px;
-  color: var(--color-red);
-  text-align: center;
-}
-
 .nav {
   display: flex;
 }

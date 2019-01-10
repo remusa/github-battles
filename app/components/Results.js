@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
 import PlayerPreview from './PlayerPreview'
+import Loading from './Loading'
 
 import api from '../utils/api'
 
@@ -109,7 +110,7 @@ class Results extends Component {
         const { winner, loser, error, loading } = this.state
 
         if (loading) {
-            return <p>Loading...</p>
+            return <Loading text='Loading' speed={500} />
         }
 
         if (error) {
