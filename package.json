@@ -11,7 +11,12 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open",
-    "create": "webpack"
+    "build-for-linux": "NODE_ENV='production' && webpack",
+    "build": "SET NODE_ENV=\"production\" && webpack",
+    "build-windows-2": "$env:NODE_ENV=\"production\" && webpack",
+    "firebase-init": "firebase login && firebase init",
+    "firebase-add": "firebase use --add",
+    "deploy": "npm run build && firebase deploy"
   },
   "keywords": [],
   "author": "",
