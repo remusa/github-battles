@@ -90,6 +90,10 @@ class Popular extends Component {
         this.updateLanguage(this.state.selectedLanguage)
     }
 
+    componentWillUnmount() {
+        return null
+    }
+
     render() {
         return (
             <div>
