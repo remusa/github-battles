@@ -1,9 +1,3 @@
 node_modules
 .DS_Store
 dist
-
-## Firebase
-firebase
-firebase.json
-.firebase
-.firebaserc
