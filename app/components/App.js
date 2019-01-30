@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
-import Nav from './Nav'
-import Home from './Home'
 import Battle from './Battle'
-import Results from './Results'
+import Home from './Home'
+import Nav from './Nav'
 import Popular from './Popular'
+import Results from './Results'
 
 class App extends Component {
     render() {
