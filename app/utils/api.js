@@ -3,19 +3,20 @@ const CLIENT_SECRET = 'CLIENT_SECRET'
 
 const params = `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
 
-const getProfile = username => {
+async function getProfile(username) {
     const URL = `https://api.github.com/users/${username}${params}`
-    return fetch(URL)
-        .then(res => res.json())
-        .catch(err => console.log('Error fetching username: ', err))
+
+    const response = await fetch(URL)
+
+    return response.json()
 }
 
-const getRepos = username => {
+async function getRepos(username) {
     const URL = `https://api.github.com/users/${username}/repos${params}&per_page=100`
 
-    return fetch(URL)
-        .then(res => res.json())
-        .catch(err => console.log('Error fetching repos: ', err))
+    const response = await fetch(URL).catch(handleError)
+
+    return response.json()
 }
 
 const getStarCount = repos =>
@@ -29,35 +30,34 @@ const handleError = error => {
     return null
 }
 
-const getUserData = player => {
-    const promisesArray = [getProfile(player), getRepos(player)]
+async function getUserData(player) {
+    const [profile, repos] = await Promise.all(
+        getProfile(player),
+        getRepos(player)
+    )
 
-    return Promise.all(promisesArray).then(data => {
-        const [profile, repos] = data
-        return {
-            profile,
-            score: calculateScore(profile, repos),
-        }
-    })
+    return {
+        profile,
+        score: calculateScore(profile, repos),
+    }
 }
 
 const sortPlayers = players => players.sort((a, b) => b.score - a.score)
 
-const battle = players => {
-    const promise = players.map(getUserData)
+export async function battle(players) {
+    const result = await Promise.all(players.map(getUserData)).catch(
+        handleError
+    )
 
-    return Promise.all(promise)
-        .then(sortPlayers)
-        .catch(handleError)
+    return results === null ? result : sortPlayers(players)
 }
 
-const fetchPopularRepos = language => {
+export async function fetchPopularRepos(language) {
     const encodedURI = `https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=star&order=desc&type=Repositories`
 
-    return fetch(encodedURI)
-        .then(res => res.json())
-        .then(res => res.items)
-        .catch(err => console.log('Error fetching popular repos: ', err))
-}
+    const response = await fetch(encodedURI).catch(handleError)
 
-export default { battle, fetchPopularRepos }
+    const repos = await response.json()
+
+    return repos.items        .
+}

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 const containerStyles = {
     content: {
@@ -19,17 +19,23 @@ const styles = {
 }
 
 class Loading extends Component {
-    constructor(props) {
-        super(props)
+    static defaultProps = {
+        text: 'Loading',
+        speed: 300,
+    }
 
-        this.state = {
-            text: props.text,
-            speed: props.speed,
-        }
+    static propTypes = {
+        text: PropTypes.string.isRequired,
+        speed: PropTypes.number.isRequired,
+    }
+
+    state = {
+        text: this.props.text,
+        speed: this.props.speed,
     }
 
     componentDidMount() {
-        const stopper = this.props.text + '...'
+        const stopper = `${this.props.text}...`
 
         this.interval = window.setInterval(() => {
             if (this.state.text === stopper) {
@@ -57,16 +63,6 @@ class Loading extends Component {
             </div>
         )
     }
-}
-
-Loading.defaultProps = {
-    text: 'Loading',
-    speed: 300,
-}
-
-Loading.propTypes = {
-    text: PropTypes.string.isRequired,
-    speed: PropTypes.number.isRequired,
 }
 
 export default Loading
